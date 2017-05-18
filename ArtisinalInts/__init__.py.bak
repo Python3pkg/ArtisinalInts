@@ -10,9 +10,9 @@ generate unique new numbers:
 The get_* functions return values, while the iter_* functions return iterators
 that can be used in loops to get a stream of new numbers.
 '''
-from http.client import HTTPConnection
-from urllib.parse import urlencode
-from urllib.parse import urljoin
+from httplib import HTTPConnection
+from urllib import urlencode
+from urlparse import urljoin
 from json import loads
 
 __version__ = '1.0.0'
@@ -34,7 +34,7 @@ def get_mission_integers(count):
     body = 'format=json&count=%d' % count
     resp = _request_mission_next_int(body)
     
-    if resp.status not in list(range(200, 299)):
+    if resp.status not in range(200, 299):
         raise Exception()
     
     return loads(resp.read())
@@ -47,7 +47,7 @@ def get_mission_integer():
     body = 'format=json'
     resp = _request_mission_next_int(body)
     
-    if resp.status not in list(range(200, 299)):
+    if resp.status not in range(200, 299):
         raise Exception('Non-2XX response code from the Mission: %d' % resp.status)
     
     value = loads(resp.read())[0]
@@ -82,7 +82,7 @@ def get_brooklyn_integer():
     conn.request('POST', '/rest/', body, head)
     resp = conn.getresponse()
     
-    if resp.status not in list(range(200, 299)):
+    if resp.status not in range(200, 299):
         raise Exception('Non-2XX response code from Brooklyn: %d' % resp.status)
     
     data = loads(resp.read())
